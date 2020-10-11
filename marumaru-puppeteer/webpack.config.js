@@ -1,33 +1,28 @@
 module.exports = {
   entry: {
-    pageOne: './ts-crawler.ts',
-    pageTwo: './CrawlerAPI/index.ts'
+    pageOne: "./index.ts",
+    pageTwo: "./CrawlerAPI/pupeteerAPI.ts",
+    pageThree: "./CrawlerAPI/fsAPI.ts",
   },
-  devtool: 'inline-source-map',
-  node: {
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty',
-    ws: 'empty',
-  },
+  devtool: "inline-source-map",
   module: {
     rules: [
       {
-        use: 'ts-loader',
+        use: "ts-loader",
         exclude: /node_modules/,
       },
     ],
   },
-  externals : { 
-    puppeteer : 'require ( "puppeteer")' , 
-} ,
-  resolve: {
-    extensions: [ '.tsx', '.ts', '.js'],
+  externals: {
+    puppeteer: 'require ( "puppeteer")',
   },
-  output:{
-    filename: '[name].js',
-    path: __dirname + '/dist',
-    chunkFilename: '[id].[chunkhash].js'
-},
-  mode: 'development'
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"],
+  },
+  output: {
+    filename: "[name].js",
+    path: __dirname + "/dist",
+    chunkFilename: "[id].[chunkhash].js",
+  },
+  mode: "development",
 };

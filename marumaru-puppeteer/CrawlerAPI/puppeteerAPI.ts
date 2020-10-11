@@ -74,7 +74,7 @@ export const getTitleAndImgSrc = async (page: puppeteer.Page, href: string) => {
 
       return { title, imgSrcArr };
     });
-    return { status: "success", result };
+    return { status: "success", result: { title: result.title, imgSrc: result.imgSrcArr} };
   } catch (err) {
     console.error(err);
     return { status: "failure", result: { title: null, imgSrc: null } };
@@ -93,10 +93,5 @@ export const imgDownload = async (
     });
 
     writeFileAPI({ folderName, title, index, data: imgResult.data });
-
-    fs.writeFileSync(
-      `${folderName}/${title}/${index + 1}_${new Date().valueOf()}.jpg`,
-      imgResult.data
-    );
   });
 };

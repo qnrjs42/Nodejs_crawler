@@ -8,17 +8,17 @@ import {
 import { mkdirAPI } from "./CrawlerAPI/fsAPI";
 
 const crawler = async () => {
+  // headless: false - GUI mode On
+  // headless: true - GUI mode Off
+  const browser = await puppeteer.launch({ headless: false });
+  const page = await browser.newPage();
+
   try {
     // 폴더 생성
     const folderName: string = "CrawlData";
     const mkdirResult = mkdirAPI(folderName);
     if (mkdirResult === "failure")
       throw new Error(`${folderName} 폴더 생성을 실패했습니다.`);
-
-    // headless: false - GUI mode On
-    // headless: true - GUI mode Off
-    const browser = await puppeteer.launch({ headless: false });
-    const page = await browser.newPage();
 
     await page.setUserAgent(
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36"
@@ -43,21 +43,21 @@ const crawler = async () => {
 
         // 타이틀 제목으로 폴더 생성
         if (getTitleAndImgSrcResult.result.title !== null) {
-          mkdirAPI(`crawlData/${getTitleAndImgSrcResult.result.title}`);
+          mkdirAPI(`${folderName}/${getTitleAndImgSrcResult.result.title}`);
 
           await imgDownload(
-            getTitleAndImgSrcResult.result.imgSrcArr,
+            getTitleAndImgSrcResult.result.imgSrc,
             getTitleAndImgSrcResult.result.title,
             folderName
           );
         }
       }
     }
-
-    await page.close();
-    await browser.close();
   } catch (e) {
     console.error(e);
+  } finally {
+    await page.close();
+    await browser.close();
   }
 };
 
