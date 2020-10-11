@@ -110,6 +110,8 @@ const crawler = async () => {
             const mkdirResult = mkdirAPI(`${folderName}/${titleHref.title}`);
                 if(mkdirResult === 'failure') throw new Error(`${folderName}/${titleHref.title} 폴더 생성을 실패했습니다.`);
 
+            console.log('srcArr: ', srcArr)
+
             srcArr.data.map(async (src, index) => {
                 const img = await axios.get(src.replace(/\?.*$/, ""), {
                     responseType: "arraybuffer",
